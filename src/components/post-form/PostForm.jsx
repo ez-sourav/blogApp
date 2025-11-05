@@ -1,14 +1,39 @@
-import { useCallback } from "react"
-import { useForm } from "react-hook-form"
-import {Button,Input,Select,RTE} from '../index'
-import appwriteService  from '../../appwrite/config2'
-import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { Button, Input, Select, RTE } from "../index";
+import appwriteService from "../../appwrite/config2";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const PostForm = () => {
-  return (
-    <div>PostForm</div>
-  )
-}
+const PostForm = (post) => {
+  const { register, handleSubmit, watch, setValue, control, getValues } =
+    useForm({
+      defaultValues: {
+        title: post?.title || "",
+        slug: post?.$id || "",
+        content: post?.content || "",
+        status: post?.status || "active",
+      },
+    });
+    const navigate = useNavigate()
+    const userData = useSelector(state => state.user.userData)
+    const submit = async (data)=>{
+      if(post){
+        const file = data.image[0] ? appwriteService.uploadFile(data.image[0]) : null
+        if(file){
+          appwriteService.deleteFile(post.featuredImage)
+        }
 
-export default PostForm
+        const dbPost = await appwriteService.updatePost(post.$id,{
+          ...data,
+          featuredImage:file? file.$id : undefined,
+        })
+
+        
+
+      }
+    }
+  return <div>PostForm</div>;
+};
+
+export default PostForm;
