@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import './App.css'
 import authService from "./appwrite/auth"
 import {login, logout} from "./store/authSlice"
 import { Footer, Header } from './components'
 import { Outlet } from 'react-router-dom'
+import './App.css'
 
 function App() {
-  const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     authService.getCurrentUser()
@@ -35,4 +35,4 @@ function App() {
   ) : null
 }
 
-export default App
+export default App;
