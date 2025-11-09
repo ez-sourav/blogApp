@@ -1,9 +1,9 @@
 import { useCallback, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Button, Input, Select, RTE } from "../index";
-import appwriteService from "../../appwrite/config2";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Button, Input, Select, RTE } from "../index";
+import { useForm } from "react-hook-form";
+import appwriteService from "../../appwrite/config2";
 
 const PostForm = (post) => {
   const { register, handleSubmit, watch, setValue, control, getValues } =
@@ -81,14 +81,14 @@ const PostForm = (post) => {
       <div className="w-2/3 px-2">
         <Input
           label="Title :"
-          placeholder="Title"
           className="mb-4"
+          placeholder="Title"
           {...register("title", { required: true })}
         />
         <Input
           label="Slug :"
-          placeholder="Slug"
           className="mb-4"
+          placeholder="Slug"
           {...register("slug", { required: true })}
           onInput={(e) => {
             setValue("slug", slugTransform(e.currentTarget.value), {
@@ -98,16 +98,16 @@ const PostForm = (post) => {
         />
         <RTE
           label="Content :"
-          name="content"
           control={control}
+          name="content"
           defaultValue={getValues("content")}
         />
       </div>
       <div className="w-1/3 px-2">
         <Input
           label="Featured Image :"
-          type="file"
           className="mb-4"
+          type="file"
           accept="image/png, image/jpg, image/jpeg, image/gif"
           {...register("image", { required: !post })}
         />
